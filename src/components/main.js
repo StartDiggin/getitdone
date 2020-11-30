@@ -1,5 +1,5 @@
 import React from 'react'
-import Data from "../data/todosData"
+// import Data from "../data/todosData"
 import TodoItem from "./subComponents/todoItems"
 import CreateTodo from "./subComponents/createTodo"
 
@@ -7,15 +7,14 @@ class Main extends React.Component {
     constructor(){
         super()
         this.state={
-            todoData: Data
+            todoData: []
         }
-        this.handleChange = this.handleChange.bind(this)
     }
 
     
 
 
-    handleChange(id) {
+    handleChange = (id) => {
         // create variable
         const updateTodo = this.state.todoData.map(todo => {
             // check if todo.id matches, return if true
@@ -30,13 +29,31 @@ class Main extends React.Component {
             todoData: updateTodo
         })
     }
+
+    // methods for the form
+    handleSubmit = (e) => {
+        e.preventDefault()
+        this.addTodo(e)
+        console.log(this.state.todoData)
+        e.target.todo.value = ''
+    }
+
+    addTodo = (e) => {
+        let id = Date.now()
+        const text = e.target.todo.value
+        let todoObj = { id:id, text: text, completed: false}
+        let todoArray = this.state.todoData
+        todoArray.push(todoObj)
+        this.setState({
+            todoData:todoArray
+        })
+    }
     
   
 
     render(){
         const todoList = this.state.todoData.map(item => item.completed ? null : <TodoItem key={item.id} item={item} handleChange={this.handleChange}/>)
         const todoDoneList = this.state.todoData.map(item => item.completed ? <TodoItem key={item.id} item={item} handleChange={this.handleChange}/> : null)
-        
 
         return(
             <div>
@@ -49,7 +66,7 @@ class Main extends React.Component {
                     {todoDoneList}
                 </ul>
                 <span>
-                    <CreateTodo />
+                    <CreateTodo handleSubmit={this.handleSubmit}/>
                 </span>
             </div>
         )

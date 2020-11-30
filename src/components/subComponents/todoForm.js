@@ -13,6 +13,7 @@ function Form(props){
                     placeholder = "Todo"  
                     onChange = {props.handleChange}  
                 />
+                <button>Submit</button>
             </form>
         </div>
     )
