@@ -8,10 +8,7 @@ function TodoItem(props){
         color: '#cdcdcd',
         textDecoration: 'line-through'
     }
-    const box = {
-        display: 'none'
-    }
- 
+
 
 
     return(

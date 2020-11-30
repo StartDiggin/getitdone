@@ -1,18 +1,18 @@
 import React from 'react'
 import Data from "../data/todosData"
 import TodoItem from "./subComponents/todoItems"
+import CreateTodo from "./subComponents/createTodo"
 
 class Main extends React.Component {
     constructor(){
         super()
         this.state={
-            name:"",
-            todoData: Data,
-            done: []
+            todoData: Data
         }
         this.handleChange = this.handleChange.bind(this)
-        this.completedTodo = this.completedTodo.bind(this)
     }
+
+    
 
 
     handleChange(id) {
@@ -24,29 +24,19 @@ class Main extends React.Component {
             }
             return todo
         })
-        this.completedTodo(id)
+        
         // update state with variable
         this.setState({
             todoData: updateTodo
         })
     }
-
-    completedTodo(id){
-        const updateDone = []
-        this.state.todoData.map(todo => {
-            if(todo.id === id && todo.completed){
-                updateDone.push(todo)
-            }
-            return todo
-        })
-        this.setState({
-            done: updateDone
-        })
-    }
+    
+  
 
     render(){
-        const todoList = this.state.todoData.map(item => <TodoItem key={item.id} item={item} handleChange={this.handleChange}/>)
-        const doneList = this.state.done.map(item => <TodoItem key={item.id} item={item} handleCompleted={this.completedTodo} />)
+        const todoList = this.state.todoData.map(item => item.completed ? null : <TodoItem key={item.id} item={item} handleChange={this.handleChange}/>)
+        const todoDoneList = this.state.todoData.map(item => item.completed ? <TodoItem key={item.id} item={item} handleChange={this.handleChange}/> : null)
+        
 
         return(
             <div>
@@ -56,8 +46,11 @@ class Main extends React.Component {
                 </ul>
                 <h2>Finished Items:</h2>
                 <ul>
-                    {doneList}
+                    {todoDoneList}
                 </ul>
+                <span>
+                    <CreateTodo />
+                </span>
             </div>
         )
     } 
