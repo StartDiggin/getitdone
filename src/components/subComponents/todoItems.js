@@ -1,6 +1,7 @@
 import React from 'react'
 
 
+
 function TodoItem(props){
     // style to add if todo is completed
     const completedStyle = {
@@ -8,7 +9,14 @@ function TodoItem(props){
         color: '#cdcdcd',
         textDecoration: 'line-through'
     }
-
+    const buttonStyle = {
+        border: "none",
+        backgroundColor: "white",
+        cursor: "pointer"
+    }
+    const btnDoneStyle = {
+        display: 'none'
+    }
 
 
     return(
@@ -21,7 +29,8 @@ function TodoItem(props){
                 onChange={() => {props.handleChange(props.item.id)}}  
             />
             {/* check to see if todo is completed, ternary operator */}
-            <span style={props.item.completed ? completedStyle : null} >{props.item.text}</span>
+            <span style={props.item.completed ? completedStyle : null} >{props.item.text}  
+            <button style={props.item.completed ? btnDoneStyle:buttonStyle} onClick={() => props.handleEdit(props.item.id)}>| Edit</button> </span>
         </div>
     )
 }

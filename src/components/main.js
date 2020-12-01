@@ -2,11 +2,13 @@ import React from 'react'
 // import Data from "../data/todosData"
 import TodoItem from "./subComponents/todoItems"
 import CreateTodo from "./subComponents/createTodo"
+import UpdateTodo from "./subComponents/updateTodo"
 
 class Main extends React.Component {
     constructor(){
         super()
         this.state={
+            edit: false,
             todoData: []
         }
     }
@@ -34,7 +36,6 @@ class Main extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault()
         this.addTodo(e)
-        console.log(this.state.todoData)
         e.target.todo.value = ''
     }
 
@@ -48,12 +49,38 @@ class Main extends React.Component {
             todoData:todoArray
         })
     }
+
+    handleEdit = (e, id) => {
+        // const todo = this.state.todoData.find(item => item.id === id ? item.text : null)
+        // const todo = this.state.todoData.find(item => item.id === id ?
+        //     <form>
+        //         <input 
+        //             id={item.id}
+        //             type="checkbox"
+        //             checked={item.completed}
+        //             value={e.target.text.value}
+        //         />
+        //     </form> : null
+            
+        // )
+        // console.log(todo)
+        this.setState({
+            edit: true
+        })
+        
+    }
+
+    handleUpdate = (e, id) => {
+        e.preventDefault()
+        let todo = this.state.todoData.filter(item => item.id === id)
+        console.log(id, todo)
+    }
     
   
 
     render(){
-        const todoList = this.state.todoData.map(item => item.completed ? null : <TodoItem key={item.id} item={item} handleChange={this.handleChange}/>)
-        const todoDoneList = this.state.todoData.map(item => item.completed ? <TodoItem key={item.id} item={item} handleChange={this.handleChange}/> : null)
+        const todoList = this.state.todoData.map(item => item.completed ? null : <TodoItem key={item.id} item={item} handleChange={this.handleChange} handleEdit={this.handleEdit} />)
+        const todoDoneList = this.state.todoData.map(item => item.completed ? <TodoItem key={item.id} item={item} handleChange={this.handleChange} handleEdit={this.handleEdit} /> : null)
 
         return(
             <div>
@@ -66,7 +93,7 @@ class Main extends React.Component {
                     {todoDoneList}
                 </ul>
                 <span>
-                    <CreateTodo handleSubmit={this.handleSubmit}/>
+                    {this.state.edit ? <UpdateTodo handleUpdate={this.handleUpdate} /> : <CreateTodo handleSubmit={this.handleSubmit}/>}
                 </span>
             </div>
         )
