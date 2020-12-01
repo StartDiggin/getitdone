@@ -30,7 +30,9 @@ function TodoItem(props){
             />
             {/* check to see if todo is completed, ternary operator */}
             <span style={props.item.completed ? completedStyle : null} >{props.item.text}  
-            <button style={props.item.completed ? btnDoneStyle:buttonStyle} onClick={() => props.handleEdit(props.item.id)}>| Edit</button> </span>
+                <button style={props.item.completed ? btnDoneStyle:buttonStyle} onClick={() => props.handleEdit(props.item.id)}>| Edit</button> 
+                <button style={props.item.completed ? btnDoneStyle:buttonStyle} onClick={() => props.handleDelete(props.item.id)}>| Delete</button> 
+            </span>
         </div>
     )
 }

@@ -50,7 +50,7 @@ class Main extends React.Component {
         })
     }
 
-    handleEdit = (e, id) => {
+    handleEdit = (id) => {
         // const todo = this.state.todoData.find(item => item.id === id ? item.text : null)
         // const todo = this.state.todoData.find(item => item.id === id ?
         //     <form>
@@ -64,6 +64,7 @@ class Main extends React.Component {
             
         // )
         // console.log(todo)
+        console.log(id)
         this.setState({
             edit: true
         })
@@ -72,15 +73,22 @@ class Main extends React.Component {
 
     handleUpdate = (e, id) => {
         e.preventDefault()
-        let todo = this.state.todoData.filter(item => item.id === id)
-        console.log(id, todo)
+        // let todo = this.state.todoData.filter(item => item.id === id)
+        console.log(e.target, id)
+    }
+
+    handleDelete = (id) => {
+        const newList = this.state.todoData.filter(item => item.id !== id)
+        this.setState({
+            todoData: newList
+        })
     }
     
   
 
     render(){
-        const todoList = this.state.todoData.map(item => item.completed ? null : <TodoItem key={item.id} item={item} handleChange={this.handleChange} handleEdit={this.handleEdit} />)
-        const todoDoneList = this.state.todoData.map(item => item.completed ? <TodoItem key={item.id} item={item} handleChange={this.handleChange} handleEdit={this.handleEdit} /> : null)
+        const todoList = this.state.todoData.map(item => item.completed ? null : <TodoItem key={item.id} item={item} handleChange={this.handleChange} handleEdit={this.handleEdit} handleDelete={this.handleDelete}/>)
+        const todoDoneList = this.state.todoData.map(item => item.completed ? <TodoItem key={item.id} item={item} handleChange={this.handleChange} /> : null)
 
         return(
             <div>
@@ -93,7 +101,7 @@ class Main extends React.Component {
                     {todoDoneList}
                 </ul>
                 <span>
-                    {this.state.edit ? <UpdateTodo handleUpdate={this.handleUpdate} /> : <CreateTodo handleSubmit={this.handleSubmit}/>}
+                    {this.state.edit ? <UpdateTodo handleUpdate={this.handleUpdate}/> : <CreateTodo handleSubmit={this.handleSubmit}/>}
                 </span>
             </div>
         )
