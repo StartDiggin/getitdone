@@ -2,6 +2,7 @@ import React from 'react'
 
 
 
+
 function TodoItem(props){
     // style to add if todo is completed
     const completedStyle = {
@@ -18,19 +19,20 @@ function TodoItem(props){
         display: 'none'
     }
 
+   
 
     return(
-        // <div style={props.item.completed ? box : null}>
         <div>
             <input 
                 id={props.item.id}
+                name="todo"
                 type="checkbox"
                 checked={props.item.completed}
                 onChange={() => {props.handleChange(props.item.id)}}  
             />
             {/* check to see if todo is completed, ternary operator */}
             <span style={props.item.completed ? completedStyle : null} >{props.item.text}  
-                <button style={props.item.completed ? btnDoneStyle:buttonStyle} onClick={() => props.handleEdit(props.item.id)}>| Edit</button> 
+                <button style={props.item.completed ? btnDoneStyle:buttonStyle} onClick={() => props.handleEdit(props.item.id)} >| Edit</button> 
                 <button style={props.item.completed ? btnDoneStyle:buttonStyle} onClick={() => props.handleDelete(props.item.id)}>| Delete</button> 
             </span>
         </div>
