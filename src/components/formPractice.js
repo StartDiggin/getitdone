@@ -19,19 +19,17 @@ class UpdateForm extends React.Component {
         })
     }
 
-
     handleSubmit = (e) => {
         e.preventDefault()
-        let id = Date.now()
-        const {name,value} = e.target.fname
-        this.addPerson(id, name, value)
-        console.log(this.state.items)
+        this.addPerson(e)
         this.setState({
             fname: ''
         })
     }
     
-    addPerson = (id, name, value) => {
+    addPerson = (e) => {
+        let id = Date.now()
+        const {name,value} = e.target.fname
         let personObj = { id:id, name:name, fname:value}
         let newArr = this.state.items
         newArr.push(personObj)
@@ -58,17 +56,13 @@ class UpdateForm extends React.Component {
     
     handleUpdate = (e) => {
         e.preventDefault()
-
         let id = this.state.id
-        // const newPerson = this.state.items.map({}, person, {name:"Bob"})
         this.setState(() => {
             const person = this.state.items.find(item => item.id === id)
             person.fname = e.target.fname.value 
-            // person.fname = "bob"
             return { person }
         })
         this.resetState()
-        console.log(e.target.fname.value)
     }
 
     resetState = () => {
