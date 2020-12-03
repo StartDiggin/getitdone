@@ -28,7 +28,7 @@ function TodoItem(props){
                 name="todo"
                 type="checkbox"
                 checked={props.item.completed}
-                onChange={() => {props.handleChange(props.item.id)}}  
+                onChange={() => {props.handleChange(props.item.id)}} 
             />
             {/* check to see if todo is completed, ternary operator */}
             <span style={props.item.completed ? completedStyle : null} >{props.item.text}  

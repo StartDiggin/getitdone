@@ -58,6 +58,7 @@ class Main extends React.Component {
     onInputChange = (e) => {
         console.log('editing')
         // const {name, value} : e.target.todo 
+        console.log(e)
 
 
         // this.setState({
@@ -70,8 +71,8 @@ class Main extends React.Component {
   
 
     render(){
-        const todoList = this.state.todoData.map(item => item.completed ? null : <TodoItem key={item.id} item={item} handleChange={this.handleChange}  handleDelete={this.handleDelete}/>)
-        const todoDoneList = this.state.todoData.map(item => item.completed ? <TodoItem key={item.id} item={item} handleChange={this.handleChange} /> : null)
+        const todoList = this.state.todoData.map(item => item.completed ? null : <TodoItem key={item.id} item={item} handleChange={this.handleChange}  onChange={this.onInputChange} handleDelete={this.handleDelete}/>)
+        const todoDoneList = this.state.todoData.map(item => item.completed ? <TodoItem key={item.id} item={item} handleChange={this.handleChange} onChange={this.onInputChange}/> : null)
         
 
         return(
@@ -90,7 +91,7 @@ class Main extends React.Component {
 
                 <div>
                     <form onSubmit={this.updateTodo}>
-                        <label>Todo:</label>
+                        <label>Update Todo:</label>
                         <input 
                             type="text" 
                             name = "todo"
@@ -98,7 +99,7 @@ class Main extends React.Component {
                             placeholder = "Todo"  
                             onChange = {this.onInputChange}  
                         />
-                        <button>Submit</button>
+                        <button>Update</button>
                     </form>
                 </div>
                
