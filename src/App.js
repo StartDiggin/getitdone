@@ -1,7 +1,7 @@
 // import './App.css';
 import './sass/styles.scss'
 import Header from "./components/header"
-import Footer from "./components/footer"
+// import Footer from "./components/footer"
 import Main from "./components/main"
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <div className="App">
      <Header />
      <Main />
-     <Footer />
+     {/* <Footer /> */}
     </div>
   );
 }

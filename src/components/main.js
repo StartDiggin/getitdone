@@ -2,6 +2,7 @@ import React from 'react'
 // import Data from "../data/todosData"
 import TodoItem from "./subComponents/todoItems"
 import CreateTodo from "./subComponents/createTodo"
+import UpdateTodo from "./subComponents/updateTodo"
 
 
 class Main extends React.Component {
@@ -10,7 +11,7 @@ class Main extends React.Component {
         this.state={
             edit: false,
             id: 0,
-            name: "",
+            todo: "",
             todoData: []
         }
     }
@@ -55,14 +56,42 @@ class Main extends React.Component {
         })
     }
 
+    handleEdit = (id) => {
+        const todo = this.state.todoData.find(todo => todo.id === id)
+        this.setState({
+            edit: true,
+            id:id,
+            todo:todo.name
+        })
+    }
+
+    handleUpdate = (e) => {
+        e.preventDefault()
+        let id = this.state.id
+        // const todo = this.state.todoData.find(todo => todo.id === id)
+        // console.log(e.target.todo.value, todo)
+        this.setState(() => {
+            const todo = this.state.todoData.find(todo => todo.id === id)
+            todo.text = e.target.todo.value 
+            return { todo }
+        })
+        this.resetState()
+    }
+
+    resetState = () => {
+        this.setState({
+            edit: false,
+            id:0,
+            todo: ''
+        })
+    }
+
     onInputChange = (e) => {
-        console.log('editing')
-        // const {name, value} : e.target.todo 
-
-
+        // const {name, value} = e.target.todo
         // this.setState({
-        //     [name]: value
+        //     [name]:value
         // })
+        console.log('changing')
     }
 
     
@@ -70,39 +99,32 @@ class Main extends React.Component {
   
 
     render(){
-        const todoList = this.state.todoData.map(item => item.completed ? null : <TodoItem key={item.id} item={item} handleChange={this.handleChange}  handleDelete={this.handleDelete}/>)
+        const todoList = this.state.todoData.map(item => item.completed ? null : <TodoItem key={item.id} item={item} 
+        handleChange={this.handleChange}  
+        handleEdit={this.handleEdit} 
+        handleDelete={this.handleDelete}
+        />)
         const todoDoneList = this.state.todoData.map(item => item.completed ? <TodoItem key={item.id} item={item} handleChange={this.handleChange} /> : null)
         
 
         return(
             <div>
-                <h1 className="main">Todos on my list of shit to get done!!!</h1>
-                <ul className="main__list">
-                    {todoList}
-                </ul>
-                <h2>Finished Items:</h2>
-                <ul>
-                    {todoDoneList}
-                </ul>
-                <span>
-                    <CreateTodo  handleSubmit={this.handleSubmit}/>
-                </span>
-
+                {this.state.edit ? <UpdateTodo onChange={this.handleChange} handleUpdate={this.handleUpdate}/> : <CreateTodo  handleSubmit={this.handleSubmit}/>}
                 <div>
-                    <form onSubmit={this.updateTodo}>
-                        <label>Todo:</label>
-                        <input 
-                            type="text" 
-                            name = "todo"
-                            value = {this.state.name}
-                            placeholder = "Todo"  
-                            onChange = {this.onInputChange}  
-                        />
-                        <button>Submit</button>
-                    </form>
+                    <ul className="main__list">
+                        {todoList}
+                    </ul>
                 </div>
-               
-               
+                
+                
+                <div>
+                    <h2>Completed List!</h2>
+                    <ul>
+                        {todoDoneList}
+                    </ul>
+                </div>
+                
+                
             </div>
         )
     } 
