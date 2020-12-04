@@ -65,11 +65,9 @@ class Main extends React.Component {
         })
     }
 
-    handleUpdate = (e) => {
+    handleUpdate = (e) => { 
         e.preventDefault()
         let id = this.state.id
-        // const todo = this.state.todoData.find(todo => todo.id === id)
-        // console.log(e.target.todo.value, todo)
         this.setState(() => {
             const todo = this.state.todoData.find(todo => todo.id === id)
             todo.text = e.target.todo.value 
@@ -86,18 +84,7 @@ class Main extends React.Component {
         })
     }
 
-    onInputChange = (e) => {
-        // const {name, value} = e.target.todo
-        // this.setState({
-        //     [name]:value
-        // })
-        console.log('changing')
-    }
-
     
-    
-  
-
     render(){
         const todoList = this.state.todoData.map(item => item.completed ? null : <TodoItem key={item.id} item={item} 
         handleChange={this.handleChange}  
