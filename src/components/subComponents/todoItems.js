@@ -28,10 +28,10 @@ function TodoItem(props){
                 name="todo"
                 type="checkbox"
                 checked={props.item.completed}
-                onChange={() => {props.handleChange(props.item.id)}} 
+                onChange={() => {props.handleCheckbox(props.item.id)}} 
             />
             {/* check to see if todo is completed, ternary operator */}
-            <span style={props.item.completed ? completedStyle : null} >{props.item.text}  
+            <span style={props.item.completed ? completedStyle : null} >{props.item.value}  
                 <button style={props.item.completed ? btnDoneStyle:buttonStyle} onClick={() => props.handleEdit(props.item.id)} >| Edit</button> 
                 <button style={props.item.completed ? btnDoneStyle:buttonStyle} onClick={() => props.handleDelete(props.item.id)}>| Delete</button> 
             </span>

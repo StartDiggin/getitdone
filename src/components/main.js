@@ -1,7 +1,9 @@
 import React from 'react'
-// import Data from "../data/todosData"
+
 import TodoItem from "./subComponents/todoItems"
-import CreateTodo from "./subComponents/createTodo"
+import AddTodo from "./subComponents/addTodo"
+import UpdateTodo from "./subComponents/updateTodo"
+
 
 
 class Main extends React.Component {
@@ -10,12 +12,21 @@ class Main extends React.Component {
         this.state={
             edit: false,
             id: 0,
-            name: "",
+            todo: "",
             todoData: []
         }
     }
 
-    handleChange = (id) => {
+    handleChange = (e) => {
+        // Input values
+        const { name, value } = e.target
+        // updates state when checkbox is checked or unchecked.
+        this.setState({
+            [ name ]: value
+        })
+    }
+
+    handleCheckbox = (id) => {
         // handles checkboxes
         const updateTodo = this.state.todoData.map(todo => {
             // check if todo.id matches, return if true
@@ -24,23 +35,23 @@ class Main extends React.Component {
             }
             return todo
         })
-        // updates state when checkbox is checked or unchecked.
+
         this.setState({
             todoData: updateTodo
         })
     }
-
+    
     // methods for the form
     handleSubmit = (e) => {
         e.preventDefault()
         this.addTodo(e)
-        e.target.todo.value = ''
+        this.resetState()
     }
 
     addTodo = (e) => {
         let id = Date.now()
-        const {value, name, type} = e.target.todo
-        let todoObj = { id:id, text: value, name: name, type: type, completed: false}
+        const {name, value} = e.target.todo
+        let todoObj = { id:id, name:name, value:value, completed: false}
         let todoArray = this.state.todoData
         todoArray.push(todoObj)
         this.setState({
@@ -55,29 +66,51 @@ class Main extends React.Component {
         })
     }
 
-    onInputChange = (e) => {
-        console.log('editing')
-        // const {name, value} : e.target.todo 
-        console.log(e)
-
-
-        // this.setState({
-        //     [name]: value
-        // })
+    handleEdit = (id) => {
+        const todo = this.state.todoData.find(todo => todo.id === id)
+        this.setState({
+            edit:true,
+            id:id,
+            todo: todo.value
+        })
     }
 
-    
+    handleUpdate = (e) => {
+        e.preventDefault()
+        let id = this.state.id
+
+        this.setState(() => {
+            const todo = this.state.todoData.find(todo => todo.id === id)
+            todo.value = e.target.todo.value
+            return { todo }
+        })
+        this.resetState()
+    }
+
+    resetState = () => {
+        this.setState({
+            edit:false,
+            id:0,
+            todo:''
+        })
+    }
     
   
 
     render(){
-        const todoList = this.state.todoData.map(item => item.completed ? null : <TodoItem key={item.id} item={item} handleChange={this.handleChange}  onChange={this.onInputChange} handleDelete={this.handleDelete}/>)
-        const todoDoneList = this.state.todoData.map(item => item.completed ? <TodoItem key={item.id} item={item} handleChange={this.handleChange} onChange={this.onInputChange}/> : null)
+        const todoList = this.state.todoData.map(item => item.completed ? null : <TodoItem key={item.id} item={item} handleCheckbox={this.handleCheckbox} handleEdit={this.handleEdit} handleDelete={this.handleDelete}/>)
+        const todoDoneList = this.state.todoData.map(item => item.completed ? <TodoItem key={item.id} item={item} handleCheckbox={this.handleCheckbox} onChange={this.onInputChange}/> : null)
         
 
         return(
             <div>
-                <h1 className="main">Todos on my list of shit to get done!!!</h1>
+                <h1 className="main">Todos on my list of stuff to get done!!!</h1>
+                {/* Toggle betweet add and update todo  */}
+                <div>
+                    {this.state.edit ?  <UpdateTodo onSubmit={this.handleUpdate} onChange={this.handleChange} todo={this.state.todo} />
+                   : <AddTodo onSubmit={this.handleSubmit} onChange={this.handleChange} todo={this.state.todo} /> }
+                </div>
+               
                 <ul className="main__list">
                     {todoList}
                 </ul>
@@ -85,25 +118,6 @@ class Main extends React.Component {
                 <ul>
                     {todoDoneList}
                 </ul>
-                <span>
-                    <CreateTodo  handleSubmit={this.handleSubmit}/>
-                </span>
-
-                <div>
-                    <form onSubmit={this.updateTodo}>
-                        <label>Update Todo:</label>
-                        <input 
-                            type="text" 
-                            name = "todo"
-                            value = {this.state.name}
-                            placeholder = "Todo"  
-                            onChange = {this.onInputChange}  
-                        />
-                        <button>Update</button>
-                    </form>
-                </div>
-               
-               
             </div>
         )
     } 
