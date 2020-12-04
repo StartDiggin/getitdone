@@ -90,22 +90,22 @@ class Main extends React.Component {
         const todoDoneList = this.state.todoData.map(item => item.completed ? <TodoItem key={item.id} item={item} handleCheckbox={this.handleCheckbox} onChange={this.onInputChange}/> : null)
         
         return(
-            <div className="main">
-                <h1 >Todos on my list of stuff to get done!!!</h1>
-                {/* Toggle betweet add and update todo  */}
-                <div>
-                    {this.state.edit ?  <UpdateTodo onSubmit={this.handleUpdate} onChange={this.handleChange} todo={this.state.todo} />
-                   : <AddTodo onSubmit={this.handleSubmit} onChange={this.handleChange} todo={this.state.todo} /> }
-                </div>
-               
-                <ul className="main__list">
-                    {todoList}
-                </ul>
-                <h2>Finished Items:</h2>
-                <ul>
-                    {todoDoneList}
-                </ul>
-            </div>
+<div className="main">
+    <h1 >Todos on my list of stuff to get done!!!</h1>
+    {/* Toggle betweet add and update todo  */}
+    <div>
+        {this.state.edit ?  <UpdateTodo onSubmit={this.handleUpdate} onChange={this.handleChange} todo={this.state.todo} /> : <AddTodo onSubmit={this.handleSubmit} onChange={this.handleChange} todo={this.state.todo} /> }
+    </div>
+    <div className="main__list">
+        <ul className="main__list--items">
+            {todoList}
+        </ul>
+    </div>
+    <div>
+        <h2>Finished Items:</h2>
+        <ul className="main__list--items">{todoDoneList}</ul>
+    </div>
+</div> 
         )
     } 
 }

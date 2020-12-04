@@ -1,5 +1,5 @@
 // import './App.css';
-import './sass/styles.scss'
+import "./sass/styles.scss"
 import Header from "./components/header"
 import Main from "./components/main"
 

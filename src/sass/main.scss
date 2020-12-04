@@ -1,9 +1,15 @@
 .main {
-  color: orangered;
   border: 1px solid black;
+  grid-column: 1/-1;
+  display: grid;
+  justify-content: center;
 
   &__list {
     list-style-type: none;
-    color: purple;
+    margin: 0;
+
+    &--items {
+      color: purple;
+    }
   }
 }
