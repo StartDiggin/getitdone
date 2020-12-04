@@ -1,6 +1,6 @@
 import React from 'react'
 	
-function updateForm(props){
+function addTodo(props){
     return (
         <div>
            <form onSubmit={props.onSubmit}>
@@ -11,9 +11,9 @@ function updateForm(props){
                     placeholder = "Todo"  
                     onChange = {props.onChange}  
                 />
-                <button>Update</button>
+                <button>Add Todo</button>
             </form>
         </div>
     )
 }
-export default updateForm  
+export default addTodo 
